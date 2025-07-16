@@ -19,10 +19,17 @@ const SignIn = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Navigate to success page (simulate existing user)
-    navigate("/success");
+    setIsSubmitting(true);
+    
+    // Simulate signin process
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Navigate to dashboard after successful signin
+    navigate("/dashboard");
   };
 
   return (
@@ -103,8 +110,16 @@ const SignIn = () => {
             type="submit" 
             variant="hero" 
             className="w-full mt-6"
+            disabled={isSubmitting}
           >
-            Sign In
+            {isSubmitting ? (
+              <div className="flex items-center">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                Signing In...
+              </div>
+            ) : (
+              "Sign In"
+            )}
           </Button>
         </form>
 

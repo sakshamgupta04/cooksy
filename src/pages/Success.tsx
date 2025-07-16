@@ -7,8 +7,8 @@ const Success = () => {
   const navigate = useNavigate();
 
   const handleStartCooking = () => {
-    // Navigate to main app or dashboard
-    navigate("/");
+    // Navigate to main dashboard
+    navigate("/dashboard");
   };
 
   return (
