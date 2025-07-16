@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import cooksyLogo from "@/assets/cooksy-logo.png";
 
@@ -36,11 +37,11 @@ export function Header() {
 
           {/* Auth Buttons */}
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm">
-              Sign In
+            <Button asChild variant="ghost" size="sm">
+              <Link to="/signin">Sign In</Link>
             </Button>
-            <Button variant="hero" size="sm">
-              Sign Up
+            <Button asChild variant="hero" size="sm">
+              <Link to="/signup">Sign Up</Link>
             </Button>
           </div>
         </div>
