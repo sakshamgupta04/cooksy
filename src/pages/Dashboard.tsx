@@ -35,75 +35,73 @@ const Dashboard = () => {
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen w-full flex bg-gradient-warm">
-        <AppSidebar />
-        
-        <div className="flex-1 flex flex-col">
-          {/* Header */}
-          <header className="flex items-center justify-between p-4 bg-background/95 backdrop-blur-sm border-b border-border/50">
-            {/* Left Section with Sidebar Toggle and Logo */}
-            <div className="flex items-center space-x-4">
-              <SidebarTrigger className="p-2 hover:bg-accent/50 rounded-lg transition-colors duration-200" />
-              <div className="flex items-center space-x-3">
-                <img 
-                  src={cooksyLogo} 
-                  alt="Cooksy Logo" 
-                  className="h-10 w-10 rounded-lg shadow-card"
-                />
-                <h1 className="text-xl font-bold text-foreground bg-gradient-hero bg-clip-text text-transparent">
-                  Cooksy
-                </h1>
-              </div>
+      <div className="min-h-screen w-full bg-gradient-warm">
+        {/* Header */}
+        <header className="flex items-center justify-between p-4 bg-background/95 backdrop-blur-sm border-b border-border/50 w-full">
+          {/* Left Section with Logo */}
+          <div className="flex items-center space-x-3">
+            <img 
+              src={cooksyLogo} 
+              alt="Cooksy Logo" 
+              className="h-10 w-10 rounded-lg shadow-card"
+            />
+            <h1 className="text-xl font-bold text-foreground bg-gradient-hero bg-clip-text text-transparent">
+              Cooksy
+            </h1>
+          </div>
+
+          {/* Account Section */}
+          <div className="flex items-center space-x-4">
+            {/* Theme Toggle */}
+            <div className="flex items-center space-x-2">
+              <Sun className="h-4 w-4" />
+              <Switch 
+                checked={isDarkMode}
+                onCheckedChange={toggleTheme}
+              />
+              <Moon className="h-4 w-4" />
             </div>
 
-            {/* Account Section */}
-            <div className="flex items-center space-x-4">
-              {/* Theme Toggle */}
-              <div className="flex items-center space-x-2">
-                <Sun className="h-4 w-4" />
-                <Switch 
-                  checked={isDarkMode}
-                  onCheckedChange={toggleTheme}
-                />
-                <Moon className="h-4 w-4" />
-              </div>
+            {/* User Menu */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                  <Avatar className="h-10 w-10">
+                    <AvatarImage src="" alt="User" />
+                    <AvatarFallback className="bg-primary text-primary-foreground">
+                      JD
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 bg-background border-border/50" align="end" forceMount>
+                <div className="flex flex-col space-y-1 p-2">
+                  <p className="text-sm font-medium leading-none">john.doe@gmail.com</p>
+                  <p className="text-xs leading-none text-muted-foreground">
+                    Welcome back!
+                  </p>
+                </div>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="hover:bg-accent">
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Settings</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  className="hover:bg-accent text-destructive focus:text-destructive"
+                  onClick={handleLogout}
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </header>
 
-              {/* User Menu */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                    <Avatar className="h-10 w-10">
-                      <AvatarImage src="" alt="User" />
-                      <AvatarFallback className="bg-primary text-primary-foreground">
-                        JD
-                      </AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56 bg-background border-border/50" align="end" forceMount>
-                  <div className="flex flex-col space-y-1 p-2">
-                    <p className="text-sm font-medium leading-none">john.doe@gmail.com</p>
-                    <p className="text-xs leading-none text-muted-foreground">
-                      Welcome back!
-                    </p>
-                  </div>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem className="hover:bg-accent">
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Settings</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    className="hover:bg-accent text-destructive focus:text-destructive"
-                    onClick={handleLogout}
-                  >
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          </header>
-
+        {/* Content Area with Sidebar */}
+        <div className="flex">
+          <AppSidebar />
+          
           {/* Main Content */}
           <main className="flex-1 p-6">
             {/* Filter Tabs */}
