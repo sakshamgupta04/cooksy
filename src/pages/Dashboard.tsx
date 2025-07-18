@@ -99,11 +99,11 @@ const Dashboard = () => {
         </header>
 
         {/* Content Area with Sidebar */}
-        <div className="flex">
+        <div className="flex h-[calc(100vh-80px)]">
           <AppSidebar />
           
           {/* Main Content */}
-          <main className="flex-1 p-6">
+          <main className="flex-1 p-6 overflow-auto">
             {/* Filter Tabs */}
             <div className="flex justify-center mb-12">
               <div className="flex bg-gradient-to-r from-background/80 to-background/60 backdrop-blur-lg rounded-2xl p-2 border border-border/30 shadow-glow">
