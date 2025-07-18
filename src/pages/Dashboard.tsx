@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { Switch } from "@/components/ui/switch";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { Settings, LogOut, Sun, Moon, Menu } from "lucide-react";
 import cooksyLogo from "@/assets/cooksy-logo.png";
@@ -37,7 +37,7 @@ const Dashboard = () => {
     <SidebarProvider>
       <div className="min-h-screen w-full bg-gradient-warm flex flex-col">
         {/* Header */}
-        <header className="flex items-center justify-between p-4 bg-background/95 backdrop-blur-sm border-b border-border/50 w-full z-50 relative">
+        <header className="flex items-center justify-between p-4 bg-background/95 backdrop-blur-sm border-b border-border/50 w-full z-50 relative h-16">
           {/* Left Section with Logo */}
           <div className="flex items-center space-x-3">
             <img 
@@ -98,12 +98,13 @@ const Dashboard = () => {
           </div>
         </header>
 
-        {/* Content Area with Sidebar */}
-        <div className="flex flex-1 relative">
+        {/* Content Area with Sidebar - positioned below header */}
+        <div className="flex flex-1 relative" style={{ marginTop: '0px' }}>
           <AppSidebar />
           
           {/* Main Content */}
-          <main className="flex-1 p-6 overflow-auto">
+          <main className="flex-1 p-6 overflow-auto transition-all duration-300 ml-72"
+                style={{ marginLeft: 'var(--sidebar-width, 288px)' }}>
             {/* Filter Tabs */}
             <div className="flex justify-center mb-12">
               <div className="flex bg-gradient-to-r from-background/80 to-background/60 backdrop-blur-lg rounded-2xl p-2 border border-border/30 shadow-glow">

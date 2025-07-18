@@ -40,7 +40,8 @@ export function AppSidebar() {
   return (
     <Sidebar
       className={cn(
-        "transition-all duration-500 ease-in-out border-r-0 shadow-xl relative",
+        "transition-all duration-500 ease-in-out border-r-0 shadow-xl",
+        "fixed top-16 left-0 h-[calc(100vh-4rem)] z-40",
         isCollapsed ? "w-16" : "w-72"
       )}
       collapsible="icon"
