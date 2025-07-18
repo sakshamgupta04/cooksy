@@ -35,9 +35,9 @@ const Dashboard = () => {
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen w-full bg-gradient-warm">
+      <div className="min-h-screen w-full bg-gradient-warm flex flex-col">
         {/* Header */}
-        <header className="flex items-center justify-between p-4 bg-background/95 backdrop-blur-sm border-b border-border/50 w-full">
+        <header className="flex items-center justify-between p-4 bg-background/95 backdrop-blur-sm border-b border-border/50 w-full z-50 relative">
           {/* Left Section with Logo */}
           <div className="flex items-center space-x-3">
             <img 
@@ -99,7 +99,7 @@ const Dashboard = () => {
         </header>
 
         {/* Content Area with Sidebar */}
-        <div className="flex h-[calc(100vh-80px)]">
+        <div className="flex flex-1 relative">
           <AppSidebar />
           
           {/* Main Content */}

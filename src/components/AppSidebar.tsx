@@ -40,14 +40,17 @@ export function AppSidebar() {
   return (
     <Sidebar
       className={cn(
-        "transition-all duration-500 ease-in-out border-r-0 shadow-xl",
+        "transition-all duration-500 ease-in-out border-r-0 shadow-xl relative",
         isCollapsed ? "w-16" : "w-72"
       )}
       collapsible="icon"
     >
-      <SidebarContent className="bg-gradient-to-br from-background/95 via-background/98 to-accent/5 backdrop-blur-lg border-r border-border/20">
+      <SidebarContent className="bg-gradient-to-br from-background/95 via-background/98 to-accent/5 backdrop-blur-lg border-r border-border/20 h-full">
         {/* Collapse Button */}
-        <div className="flex justify-end p-4 pb-2">
+        <div className={cn(
+          "flex p-4 pb-2",
+          isCollapsed ? "justify-center" : "justify-end"
+        )}>
           <SidebarTrigger className={cn(
             "h-9 w-9 rounded-full transition-all duration-300 hover:scale-110",
             "bg-gradient-to-br from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10",
@@ -62,7 +65,10 @@ export function AppSidebar() {
         </div>
 
         {/* Main Navigation */}
-        <div className="px-4 py-2 space-y-4">
+        <div className={cn(
+          "space-y-4",
+          isCollapsed ? "px-2 py-2" : "px-4 py-2"
+        )}>
           <SidebarGroup>
             <SidebarGroupContent>
               <SidebarMenu className="space-y-3">
@@ -74,11 +80,14 @@ export function AppSidebar() {
                   >
                     <SidebarMenuButton
                       className={cn(
-                        "group relative overflow-hidden rounded-2xl px-4 py-4 transition-all duration-300",
+                        "group relative overflow-hidden transition-all duration-300",
                         "hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/10",
-                        "before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-r",
+                        "before:absolute before:inset-0 before:bg-gradient-to-r",
                         "before:from-primary/0 before:to-primary/0 before:transition-all before:duration-300",
                         "hover:before:from-primary/5 hover:before:to-primary/10",
+                        isCollapsed 
+                          ? "rounded-xl p-3 justify-center" 
+                          : "rounded-2xl px-4 py-4",
                         isActive(item.url) 
                           ? "bg-gradient-to-r from-primary/15 to-primary/10 text-primary shadow-md shadow-primary/20 border border-primary/20" 
                           : "bg-gradient-to-r from-background/50 to-background/30 text-muted-foreground hover:text-foreground hover:bg-gradient-to-r hover:from-accent/30 hover:to-accent/20"
@@ -86,8 +95,9 @@ export function AppSidebar() {
                       onClick={() => navigate(item.url)}
                     >
                       <item.icon className={cn(
-                        "h-5 w-5 flex-shrink-0 relative z-10 transition-all duration-300",
+                        "transition-all duration-300",
                         "group-hover:scale-110 group-hover:rotate-3",
+                        isCollapsed ? "h-5 w-5" : "h-5 w-5 flex-shrink-0 relative z-10",
                         isActive(item.url) ? "text-primary drop-shadow-sm" : "group-hover:text-primary"
                       )} />
                       {!isCollapsed && (
@@ -99,8 +109,11 @@ export function AppSidebar() {
                           {item.title}
                         </span>
                       )}
-                      {isActive(item.url) && (
+                      {isActive(item.url) && !isCollapsed && (
                         <div className="absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary via-primary/80 to-primary rounded-l-full" />
+                      )}
+                      {isActive(item.url) && isCollapsed && (
+                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/80 to-primary rounded-t-full" />
                       )}
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -119,31 +132,41 @@ export function AppSidebar() {
 
           {/* Cooksybook Section */}
           <SidebarGroup>
-            <Collapsible open={cooksybookOpen} onOpenChange={setCooksybookOpen}>
-              <CollapsibleTrigger className="w-full group">
-                <SidebarMenuButton className={cn(
-                  "relative overflow-hidden rounded-2xl px-4 py-4 transition-all duration-300 w-full",
+            {isCollapsed ? (
+              // Collapsed state - show just the icon
+              <SidebarMenuButton
+                className={cn(
+                  "group relative overflow-hidden transition-all duration-300 rounded-xl p-3 justify-center",
                   "hover:scale-[1.02] hover:shadow-lg hover:shadow-accent/10",
                   "bg-gradient-to-r from-accent/20 to-accent/10 hover:from-accent/30 hover:to-accent/20",
                   "border border-accent/20 hover:border-accent/30"
-                )}>
-                  <BookOpen className="h-5 w-5 flex-shrink-0 text-accent-foreground transition-all duration-300 group-hover:scale-110 group-hover:rotate-3" />
-                  {!isCollapsed && (
-                    <>
-                      <span className="font-semibold text-accent-foreground transition-all duration-300 group-hover:translate-x-1">
-                        Cooksybook
-                      </span>
-                      <ChevronRight 
-                        className={cn(
-                          "h-4 w-4 ml-auto transition-all duration-300 text-accent-foreground",
-                          cooksybookOpen ? "rotate-90 scale-110" : "group-hover:translate-x-1"
-                        )} 
-                      />
-                    </>
-                  )}
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
-              {!isCollapsed && (
+                )}
+                onClick={() => setCooksybookOpen(!cooksybookOpen)}
+              >
+                <BookOpen className="h-5 w-5 text-accent-foreground transition-all duration-300 group-hover:scale-110 group-hover:rotate-3" />
+              </SidebarMenuButton>
+            ) : (
+              // Expanded state - show collapsible section
+              <Collapsible open={cooksybookOpen} onOpenChange={setCooksybookOpen}>
+                <CollapsibleTrigger className="w-full group">
+                  <SidebarMenuButton className={cn(
+                    "relative overflow-hidden rounded-2xl px-4 py-4 transition-all duration-300 w-full",
+                    "hover:scale-[1.02] hover:shadow-lg hover:shadow-accent/10",
+                    "bg-gradient-to-r from-accent/20 to-accent/10 hover:from-accent/30 hover:to-accent/20",
+                    "border border-accent/20 hover:border-accent/30"
+                  )}>
+                    <BookOpen className="h-5 w-5 flex-shrink-0 text-accent-foreground transition-all duration-300 group-hover:scale-110 group-hover:rotate-3" />
+                    <span className="font-semibold text-accent-foreground transition-all duration-300 group-hover:translate-x-1">
+                      Cooksybook
+                    </span>
+                    <ChevronRight 
+                      className={cn(
+                        "h-4 w-4 ml-auto transition-all duration-300 text-accent-foreground",
+                        cooksybookOpen ? "rotate-90 scale-110" : "group-hover:translate-x-1"
+                      )} 
+                    />
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
                 <CollapsibleContent className="animate-accordion-down overflow-hidden">
                   <div className="mt-3 ml-6 space-y-2">
                     {cooksybookItems.map((item, index) => (
@@ -185,8 +208,8 @@ export function AppSidebar() {
                     ))}
                   </div>
                 </CollapsibleContent>
-              )}
-            </Collapsible>
+              </Collapsible>
+            )}
           </SidebarGroup>
         </div>
 
