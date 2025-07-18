@@ -46,18 +46,12 @@ export function AppSidebar() {
       <SidebarContent className="p-4 relative">
         {/* Collapse Button */}
         <div className="flex justify-end mb-4">
-          <SidebarTrigger asChild>
-            <Button 
-              variant="ghost" 
-              size="icon"
-              className="h-8 w-8 rounded-full hover:bg-accent/50 transition-all duration-300 hover:scale-110 shadow-md"
-            >
-              {isCollapsed ? (
-                <PanelLeft className="h-4 w-4" />
-              ) : (
-                <PanelLeftClose className="h-4 w-4" />
-              )}
-            </Button>
+          <SidebarTrigger className="h-8 w-8 rounded-full hover:bg-accent/50 transition-all duration-300 hover:scale-110 shadow-md">
+            {isCollapsed ? (
+              <PanelLeft className="h-4 w-4" />
+            ) : (
+              <PanelLeftClose className="h-4 w-4" />
+            )}
           </SidebarTrigger>
         </div>
 
